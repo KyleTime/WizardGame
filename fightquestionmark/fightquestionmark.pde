@@ -7,7 +7,7 @@ void setup(){
   size(1300,800);
   imageMode(CENTER);
   floorHeight = height/3*2;
-  playerSprite = loadImage("/Resources/Player.png");
+  playerSprite = loadImage("/Resources/player.png");
   p1 = new Player(true,width/4,height/2,playerSprite);
   p2 = new Player(false,width/4*3,height/2,playerSprite);
   p1.spawn();
@@ -19,7 +19,7 @@ void draw(){
   stroke(200);
   fill(100);
   rect(0,floorHeight,width,height);
-  if(p1n&&p1.y>=floorHeight-25)p1.yv=-8;
+  if(p1n&&p1.y>=floorHeight-28)p1.yv=-8;
   if(p1w&&p1.xv>-8)p1.xv-=1;
   if(p1e&&p1.xv<8)p1.xv+=1;
   p1.update();

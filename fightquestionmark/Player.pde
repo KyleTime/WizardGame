@@ -27,14 +27,14 @@ public class Player{
     xv*=0.9;
     y+=yv;
     x+=xv;
-    if(y>floorHeight-25){
-      y=floorHeight-25;
+    if(y>floorHeight-28){
+      y=floorHeight-28;
       yv=0;
     }
   }
   
   void show(){
     translate(x,y);
-    image(sprite,0,0,50,50);
+    image(sprite,0,0,100,100);
   }
 }
