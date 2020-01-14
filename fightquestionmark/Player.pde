@@ -21,4 +21,20 @@ public class Player{
     x = spawnx;
     y = spawny;
   }
+  
+  void update(){
+    yv+=0.3;
+    xv*=0.9;
+    y+=yv;
+    x+=xv;
+    if(y>floorHeight-25){
+      y=floorHeight-25;
+      yv=0;
+    }
+  }
+  
+  void show(){
+    translate(x,y);
+    image(sprite,0,0,50,50);
+  }
 }
