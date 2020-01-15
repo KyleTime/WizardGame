@@ -52,10 +52,12 @@ public class Player{
         yv = other.yv;
         xv = other.xv;
         y = other.y-other.collider.ySize;
-        onGround=true;
-      }else{
+        onGround = true;
+      }else if(x<=other.x-other.collider.xSize/2||x>=other.x+other.collider.xSize/2){
         x-=xv/2;
         other.x+=xv/2;
+      }else{
+        yv-=0.1;
       }
     }
   }
