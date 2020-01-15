@@ -25,8 +25,8 @@ public class Hat{
       float disty = master.y-y;
       xv=distx*0.65;
       yv=disty*0.65;
-      x+=xv;
-      y+=yv;
+      x+=xv/((master.hatList.indexOf(this)+1)*0.7);
+      y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1);
     }else{
       //action if thrown
       if(!collider.checkCol(floorCol)&&active){

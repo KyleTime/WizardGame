@@ -4,7 +4,7 @@ ArrayList<Hat> p1HatList = new ArrayList();
 ArrayList<Hat> p2HatList = new ArrayList();
 ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
-float floorHeight;
+float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 
 void setup(){
@@ -42,6 +42,8 @@ void setup(){
   
   p1HatList.add(new Hat(p1,hatSprite));
   p2HatList.add(new Hat(p2,hatSprite));
+  
+  hatTimer = 3;
 }
 
 
@@ -51,6 +53,14 @@ void draw(){
   stroke(200);
   fill(100);
   floorCol.render();
+  
+  //hat spawning
+  hatTimer-=0.016;
+  if(hatTimer<=0){
+    nully.x=random(width/4, width/4*3);
+    nullyHatList.add(new Hat(nully, hatSprite));
+    hatTimer=3;
+  }
   
   //p1 movement functions
   if(p1n&&p1.onGround)p1.yv=-8;
@@ -77,6 +87,7 @@ void draw(){
     h.show();
   }
   for(Hat h:nullyHatList){
+    h.thrown=true;
     h.update();
     h.show();
   }
