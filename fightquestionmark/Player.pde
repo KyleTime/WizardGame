@@ -58,6 +58,7 @@ public class Player{
         other.x+=xv/2;
       }else{
         yv-=0.1;
+        onGround=true;
       }
     }
   }
