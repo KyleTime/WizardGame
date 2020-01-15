@@ -66,12 +66,12 @@ void draw(){
   if(p1n&&p1.onGround)p1.yv=-8;
   if(p1w&&p1.xv>-8){p1.xv-=1;p1.radian-=0.5;}
   if(p1e&&p1.xv<8){p1.xv+=1;p1.radian+=0.5;}
-  if(p1s&&p1HatList.size()>0){p1.hatList.get(0).thrown=true; p1.hatList.get(0).active=true; nully.hatList.add(p1.hatList.get(0)); p1.hatList.remove(0);}
+  if(p1s&&p1HatList.size()>0){p1.hatList.get(0).thrown=true; p1.hatList.get(0).active=true; nully.hatList.add(p1.hatList.get(0)); p1.hatList.remove(0); p1s=false;}
   //p2 movement functions
   if(p2n&&p2.onGround)p2.yv=-8;
   if(p2w&&p2.xv>-8){p2.xv-=1;p2.radian+=0.5;}
   if(p2e&&p2.xv<8){p2.xv+=1;p2.radian-=0.5;}
-  if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; nully.hatList.add(p2.hatList.get(0)); p2.hatList.remove(0);}
+  if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; nully.hatList.add(p2.hatList.get(0)); p2.hatList.remove(0); p2s=false;}
   
   //update functions
   p1.update();

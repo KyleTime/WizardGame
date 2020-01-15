@@ -88,7 +88,7 @@ public class Player{
       radian-=(radian%(2*PI)-0)/10;
     }
     //player rotation
-    //rotate(radian);
+    rotate(radian);
     image(sprite,0,0,25,25);
     popMatrix();
   }
