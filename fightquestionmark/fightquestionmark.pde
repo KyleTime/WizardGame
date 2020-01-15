@@ -1,6 +1,8 @@
-Player p1, p2;
-BoxCol p1Col, p2Col, floorCol;
-Hat p1h, p2h;
+Player p1, p2, nully;
+BoxCol p1Col, p2Col, nullyCol, floorCol;
+ArrayList<Hat> p1HatList = new ArrayList();
+ArrayList<Hat> p2HatList = new ArrayList();
+ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
 float floorHeight;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
@@ -15,25 +17,31 @@ void setup(){
   floorCol = new BoxCol(width/2, height*0.9, width, height/2);
   
   //sprites
-  playerSprite = loadImage("/Resources/player.png");
+  playerSprite = loadImage("/Resources/Player.png");
   hatSprite = loadImage("/Resources/hat.png");
   
+  //nully definition
+  nully = new Player(true,width/2,height/2,playerSprite,nullyHatList);
+  nullyCol = new BoxCol(nully.x,nully.y,25,25);
+  nully.collider = nullyCol;
+  
   //p1 definition
-  p1 = new Player(true,width/4,height/2,playerSprite);
+  p1 = new Player(true,width/4,height/2,playerSprite,p1HatList);
   p1Col = new BoxCol(p1.x,p1.y,25,25);
-  p1.getCollider(p1Col);
-  p1h = new Hat(p1,hatSprite);
+  p1.collider = p1Col;
   p1.spawn();
   
   //p2 definition
-  p2 = new Player(false,width/4*3,height/2,playerSprite);
+  p2 = new Player(false,width/4*3,height/2,playerSprite,p2HatList);
   p2Col = new BoxCol(p2.x,p2.y,25,25);
-  p2.getCollider(p2Col);
-  p2h = new Hat(p2,hatSprite);
+  p2.collider = p2Col;
   p2.spawn();
   
-  p1.getOtherPlayer(p2);
-  p2.getOtherPlayer(p1);
+  p1.other = p2;
+  p2.other = p1;
+  
+  p1HatList.add(new Hat(p1,hatSprite));
+  p2HatList.add(new Hat(p2,hatSprite));
 }
 
 
@@ -44,23 +52,34 @@ void draw(){
   fill(100);
   floorCol.render();
   
-  //movement functions
+  //p1 movement functions
   if(p1n&&p1.onGround)p1.yv=-8;
-  if(p1w&&p1.xv>-8)p1.xv-=1;
-  if(p1e&&p1.xv<8)p1.xv+=1;
+  if(p1w&&p1.xv>-8){p1.xv-=1;p1.radian-=0.5;}
+  if(p1e&&p1.xv<8){p1.xv+=1;p1.radian+=0.5;}
+  if(p1s&&p1HatList.size()>0){p1.hatList.get(0).thrown=true; p1.hatList.get(0).active=true; nully.hatList.add(p1.hatList.get(0)); p1.hatList.remove(0);}
+  //p2 movement functions
   if(p2n&&p2.onGround)p2.yv=-8;
-  if(p2w&&p2.xv>-8)p2.xv-=1;
-  if(p2e&&p2.xv<8)p2.xv+=1;
+  if(p2w&&p2.xv>-8){p2.xv-=1;p2.radian+=0.5;}
+  if(p2e&&p2.xv<8){p2.xv+=1;p2.radian-=0.5;}
+  if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; nully.hatList.add(p2.hatList.get(0)); p2.hatList.remove(0);}
   
   //update functions
   p1.update();
   p1.show();
-  p1h.update();
-  p1h.show();
   p2.update();
   p2.show();
-  p2h.update();
-  p2h.show();
+  for(Hat h:p1HatList){
+    h.update();
+    h.show();
+  }
+  for(Hat h:p2HatList){
+    h.update();
+    h.show();
+  }
+  for(Hat h:nullyHatList){
+    h.update();
+    h.show();
+  }
 }
 
 
