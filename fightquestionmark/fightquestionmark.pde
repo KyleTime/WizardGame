@@ -31,6 +31,9 @@ void setup(){
   p2.getCollider(p2Col);
   p2h = new Hat(p2,hatSprite);
   p2.spawn();
+  
+  p1.getOtherPlayer(p2);
+  p2.getOtherPlayer(p1);
 }
 
 

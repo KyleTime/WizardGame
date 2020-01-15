@@ -8,6 +8,7 @@ public class Player{
   float xv;
   float yv;
   PImage sprite;
+  Player other;
   
   public Player(Boolean isRight, float spawnx, float spawny, PImage sprite){
     this.faceRight = isRight;
@@ -41,8 +42,24 @@ public class Player{
     }else{
       onGround=false;
     }
-    if(x<=0||x>=width){
+    //wall collision
+    if(x<=0+12||x>=width-12){
       x-=xv;
+    }
+    //player collision
+    if(collider.checkCol(other.collider)){
+      if(y<=other.y-other.collider.ySize/2){
+        yv = other.yv;
+        xv = other.xv;
+        y = other.y-other.collider.ySize;
+        onGround = true;
+      }else if(x<=other.x-other.collider.xSize/2||x>=other.x+other.collider.xSize/2){
+        x-=xv/2;
+        other.x+=xv/2;
+      }else{
+        yv-=0.1;
+        onGround=true;
+      }
     }
   }
   
@@ -58,5 +75,9 @@ public class Player{
   
   void getCollider(BoxCol col){
     collider = col;
+  }
+  
+  void getOtherPlayer(Player p){
+    other = p;
   }
 }
