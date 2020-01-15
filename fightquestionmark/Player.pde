@@ -35,13 +35,6 @@ public class Player{
   
   void show(){
     translate(x,y);
-    if(!faceRight){
-      scale(-1,1);
-    }
     image(sprite,0,0,100,100);
-    translate(-x,-y);
-    if(!faceRight){
-      scale(-1,1);
-    }
   }
 }
