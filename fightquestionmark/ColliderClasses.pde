@@ -45,8 +45,7 @@ public class CirCol{
     point(least[0], least[1]);
     stroke(0,0,0);
     */
-    
-    
+
      if(abs(least[0] - b.x) <= b.xSize/2 && abs(least[1] - b.y) <= b.ySize/2)
      {
          return true;
@@ -62,6 +61,7 @@ public class CirCol{
   }
 
 }
+
 
 public class BoxCol{
 
@@ -103,9 +103,7 @@ public class BoxCol{
     point(least[0], least[1]);
     stroke(0,0,0);
     */
-    
-    
-    
+
      if(abs(least[0] - x) <= xSize/2 && abs(least[1] - y) <= ySize/2)
      {
          return true;
@@ -123,8 +121,6 @@ public class BoxCol{
     else
       return false;
   }
-  
-  
   
   void render()
   {

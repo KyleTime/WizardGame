@@ -1,5 +1,6 @@
 public class Player{
-  Boolean faceRight;
+  Boolean faceRight, onGround;
+  BoxCol collider;
   float spawnx;
   float spawny;
   float x;
@@ -10,6 +11,7 @@ public class Player{
   
   public Player(Boolean isRight, float spawnx, float spawny, PImage sprite){
     this.faceRight = isRight;
+    this.onGround = false;
     this.spawnx = spawnx;
     this.spawny = spawny;
     this.x = spawnx;
@@ -27,21 +29,34 @@ public class Player{
     xv*=0.9;
     y+=yv;
     x+=xv;
-    if(y>floorHeight-28){
-      y=floorHeight-28;
+    collider.x = x;
+    collider.y = y;
+    //render player colliders
+    //collider.render();
+    //floor collision
+    if(collider.checkCol(floorCol)){
       yv=0;
+      y=floorCol.y-floorCol.ySize/2-12;
+      onGround=true;
+    }else{
+      onGround=false;
+    }
+    if(x<=0||x>=width){
+      x-=xv;
     }
   }
   
   void show(){
+    pushMatrix();
     translate(x,y);
     if(!faceRight){
       scale(-1,1);
     }
-    image(sprite,0,0,100,100);
-    translate(-x,-y);
-    if(!faceRight){
-      scale(-1,1);
-    }
+    image(sprite,0,0,25,25);
+    popMatrix();
+  }
+  
+  void getCollider(BoxCol col){
+    collider = col;
   }
 }

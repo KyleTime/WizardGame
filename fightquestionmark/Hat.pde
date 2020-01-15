@@ -25,18 +25,24 @@ public class Hat{
       yv=disty*0.65;
       x+=xv;
       y+=yv;
+    }else{
+      //action if thrown
     }
   }
   
   void show(){
-    if(!master.faceRight){
-      scale(-1,1);
-    }
-    translate(x-20,y+2);
-    image(sprite,0,0,70,70);
-    translate(-(x-20),-(y+2));
-    if(!master.faceRight){
-      scale(-1,1);
+    if(!thrown){
+      pushMatrix();
+      if(!master.faceRight){
+        translate(x+8,y-9);
+        scale(-1,1);
+      }else{
+        translate(x-8,y-9);
+      }
+      image(sprite,0,0,25,25);
+      popMatrix();
+    }else{
+      //action if thrown
     }
   }
 }
