@@ -23,7 +23,7 @@ void setup(){
   hatSprite = loadImage("/Resources/hat.png");
   
   //nully definition
-  nully = new Player(true,width/2,height/2,playerSprite,nullyHatList);
+  nully = new Player(true,width/2,0,playerSprite,nullyHatList);
   nullyCol = new BoxCol(nully.x,nully.y,25,25);
   nully.collider = nullyCol;
   
@@ -61,6 +61,8 @@ void draw(){
   if(hatTimer<=0){
     nully.x=random(width/4, width/4*3);
     nullyHatList.add(new Hat(nully, hatSprite));
+    nullyHatList.get(nullyHatList.size()-1).thrown=true;
+    nullyHatList.get(nullyHatList.size()-1).active=true;
     hatTimer=5;
   }
   
@@ -96,7 +98,6 @@ void draw(){
   }
   for(int i=0;i<nullyHatList.size();i++){
     Hat h = nullyHatList.get(i);
-    h.thrown=true;
     h.update();
     h.show();
   }
