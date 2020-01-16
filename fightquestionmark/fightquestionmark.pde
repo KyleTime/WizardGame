@@ -7,7 +7,14 @@ PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 
+///Platform Stuff
+Level lvl = new Level();
+//////////////////////////
+
 void setup(){
+  
+  lvl.begin();
+  
   //basic setup
   size(1300,800);
   imageMode(CENTER);
@@ -50,6 +57,9 @@ void setup(){
 
 
 void draw(){
+  
+
+  
   //bg draw
   background(0);
   stroke(200);
@@ -101,6 +111,11 @@ void draw(){
     h.update();
     h.show();
   }
+  
+    lvl.update();
+    
+    p1.checkLevel(lvl);
+    p2.checkLevel(lvl);
 }
 
 

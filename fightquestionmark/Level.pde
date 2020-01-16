@@ -1,0 +1,60 @@
+public class Level{
+  
+  public PImage tile;
+  
+  float tileXSize = 31;
+  float tileYSize = 31;
+  
+  public ArrayList<Platform> platforms;
+  
+  public Level()
+  {
+     
+  }
+  
+  void begin()
+  {
+    tile = loadImage("/Resources/Tiles.png");
+    
+    platforms = new ArrayList<Platform>() {};
+    platforms.add(new Platform(5,15,1, this));
+    platforms.add(new Platform(5,16,1, this));
+    platforms.add(new Platform(5,17,1, this));
+    platforms.add(new Platform(6,15,1, this));
+  }
+  
+  void update()
+  {
+    checkCollider();
+    
+    updatePlatforms();
+  }
+  
+  void checkCollider()
+  {
+    if(platforms.size() != 0)
+    {
+      for(Platform pl:platforms)
+      {
+        if(pl.collider == null)
+        {
+          pl.collider = new BoxCol(0,0,0,0);
+          pl.updateCollider();
+        }
+      }
+    }
+  }
+  
+  void updatePlatforms()
+  {
+    for(Platform pl:platforms)
+    {
+      pl.update();
+    }
+  }
+  
+  public float[] getGrid(int x, int y)
+  {
+    return new float[] {x*tileXSize, y*tileYSize};
+  }
+}
