@@ -42,9 +42,6 @@ void setup(){
   p1.other = p2;
   p2.other = p1;
   
-  p1HatList.add(new Hat(p1,hatSprite));
-  p2HatList.add(new Hat(p2,hatSprite));
-  
   hatTimer = 3;
 }
 
