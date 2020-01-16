@@ -57,13 +57,13 @@ void draw(){
   floorCol.render();
   
   //hat spawning
-  //hatTimer-=0.016;
+  hatTimer-=0.016;
   if(hatTimer<=0){
     nully.x=random(width/4, width/4*3);
     nullyHatList.add(new Hat(nully, hatSprite));
     nullyHatList.get(nullyHatList.size()-1).thrown=true;
     nullyHatList.get(nullyHatList.size()-1).active=true;
-    hatTimer=5;
+    hatTimer=10;
   }
   
   //p1 movement functions
