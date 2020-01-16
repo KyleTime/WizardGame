@@ -23,6 +23,7 @@ public class Hat{
       //action if on head
       float distx = master.x-x;
       float disty = master.y-y;
+      active=false;
       xv=distx*0.65;
       yv=disty*0.65;
       x+=xv/((master.hatList.indexOf(this)+1)*0.7);
