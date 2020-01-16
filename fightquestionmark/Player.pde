@@ -78,7 +78,7 @@ public class Player{
       //hat death
       for(int i=0;i<other.hatList.size();i++){
         Hat h = other.hatList.get(i);
-        if(collider.checkCol(h.collider)){
+        if(collider.checkCol(h.collider)&&h.active){
           dead=true;
           deadTimer=3;
         }
