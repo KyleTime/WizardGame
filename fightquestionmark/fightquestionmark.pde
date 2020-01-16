@@ -57,7 +57,7 @@ void draw(){
   floorCol.render();
   
   //hat spawning
-  hatTimer-=0.016;
+  //hatTimer-=0.016;
   if(hatTimer<=0){
     nully.x=random(width/4, width/4*3);
     nullyHatList.add(new Hat(nully, hatSprite));

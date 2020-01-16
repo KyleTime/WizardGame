@@ -30,6 +30,21 @@ public class Hat{
       y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1)+abs(xv/20);
     }else{
       //action if thrown
+      if(master!=nully){
+        for(int i=0;i<master.other.hatList.size();i++){
+          Hat h = master.other.hatList.get(i);
+          if(h.collider.checkCol(collider)&&h.thrown){
+            xv*=-0.1;
+            yv=-1;
+            h.xv*=-0.1;
+            h.yv=-1;
+            master.hatList.remove(this);
+            nully.hatList.add(this);
+            master=nully;
+            break;
+          }
+        }
+      }
       if(!collider.checkCol(floorCol)&&active){
         yv+=0.1;
         radian+=0.2;
