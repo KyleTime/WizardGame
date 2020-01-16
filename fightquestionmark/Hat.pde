@@ -33,6 +33,9 @@ public class Hat{
       if(!collider.checkCol(floorCol)&&active){
         yv+=0.1;
         radian+=0.2;
+        if(x<=0||x>=width){
+          master.hatList.remove(this);
+        }
       }else{
         //if on ground
         active = false;
