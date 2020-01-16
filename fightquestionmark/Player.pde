@@ -83,6 +83,9 @@ public class Player{
           deadTimer=3;
         }
       }
+      if(y>height){
+        dead=true;
+      }
     }else{
       deadTimer-=0.016;
       if(deadTimer<=0){
