@@ -19,57 +19,67 @@ public class Hat{
   }
   
   void update(){
-    if(!thrown){
-      //action if on head
-      float distx = master.x-x;
-      float disty = master.y-y;
-      active=false;
-      xv=distx*0.65;
-      yv=disty*0.65;
-      x+=xv/((master.hatList.indexOf(this)+1)*0.7);
-      y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1)+abs(xv/20);
-    }else{
-      //action if thrown
-      if(master!=nully){
-        for(int i=0;i<master.other.hatList.size();i++){
-          Hat h = master.other.hatList.get(i);
-          if(h.collider.checkCol(collider)&&h.thrown){
-            xv*=-0.1;
-            yv=-1;
-            h.xv*=-0.1;
-            h.yv=-1;
-            master.hatList.remove(this);
-            nully.hatList.add(this);
-            master=nully;
-            break;
+    if(!master.dead){
+      if(!thrown){
+        //action if on head
+        float distx = master.x-x;
+        float disty = master.y-y;
+        active=false;
+        xv=distx*0.65;
+        yv=disty*0.65;
+        x+=xv/((master.hatList.indexOf(this)+1)*0.7);
+        y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1)+abs(xv/20);
+      }else{
+        //action if thrown
+        if(master!=nully){
+          for(int i=0;i<master.other.hatList.size();i++){
+            Hat h = master.other.hatList.get(i);
+            if(h.collider.checkCol(collider)&&h.thrown){
+              xv*=-0.1;
+              yv=-1;
+              h.xv*=-0.1;
+              h.yv=-1;
+              master.hatList.remove(this);
+              nully.hatList.add(this);
+              master=nully;
+              break;
+            }
           }
         }
-      }
-      if(!collider.checkCol(floorCol)&&active){
-        yv+=0.1;
-        radian+=0.2;
-        if(x<=0||x>=width){
+        if(!collider.checkCol(floorCol)&&active){
+          yv+=0.1;
+          radian+=0.2;
+          if(x<=0||x>=width){
+            master.hatList.remove(this);
+          }
+        }else{
+          //if on ground
+          active = false;
           master.hatList.remove(this);
+          master=nully;
+          nullyHatList.add(this);
+          yv = 0;
+          y = floorCol.y-floorCol.ySize/2;
+          xv*=0.4;
         }
-      }else{
-        //if on ground
-        active = false;
-        master.hatList.remove(this);
-        master=nully;
-        nullyHatList.add(this);
-        yv = 0;
-        y = floorCol.y-floorCol.ySize/2;
-        xv*=0.4;
+        y+=yv;
+        x+=xv;
       }
-      y+=yv;
-      x+=xv;
-    }
-    if(master.faceRight){
-      collider.x=x-10;
-      collider.y=y-10;
+      if(master.faceRight){
+        collider.x=x-10;
+        collider.y=y-10;
+      }else{
+        collider.x=x+10;
+        collider.y=y-10;
+      }
     }else{
-      collider.x=x+10;
-      collider.y=y-10;
+      master.hatList.remove(this);
+      nully.hatList.add(this);
+      master=nully;
+      thrown=true;
+      active=true;
+      yv=-5;
+      xv=random(-5,6);
     }
   }
   
