@@ -26,18 +26,21 @@ public class Hat{
       xv=distx*0.65;
       yv=disty*0.65;
       x+=xv/((master.hatList.indexOf(this)+1)*0.7);
-      y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1);
+      y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1)+abs(xv/20);
     }else{
       //action if thrown
       if(!collider.checkCol(floorCol)&&active){
         yv+=0.1;
         radian+=0.2;
       }else{
+        //if on ground
         active = false;
+        master.hatList.remove(this);
         master=nully;
+        nullyHatList.add(this);
         yv = 0;
         y = floorCol.y-floorCol.ySize/2;
-        xv*=0.3;
+        xv*=0.4;
       }
       y+=yv;
       x+=xv;
@@ -52,24 +55,26 @@ public class Hat{
   }
   
   void show(){
-    if(!thrown){
-      //action if on head
-      pushMatrix();
-      if(!master.faceRight){
-        translate(x+8,y-9);
-        scale(-1,1);
+    if(!master.dead){
+      if(!thrown){
+        //action if on head
+        pushMatrix();
+        if(!master.faceRight){
+          translate(x+8,y-9);
+          scale(-1,1);
+        }else{
+          translate(x-8,y-9);
+        }
+        image(sprite,0,0,25,25);
+        popMatrix();
       }else{
-        translate(x-8,y-9);
+        //action if thrown
+        pushMatrix();
+        translate(x-10,y-10);
+        rotate(radian);
+        image(sprite,0,0,25,25);
+        popMatrix();
       }
-      image(sprite,0,0,25,25);
-      popMatrix();
-    }else{
-      //action if thrown
-      pushMatrix();
-      translate(x-10,y-10);
-      rotate(radian);
-      image(sprite,0,0,25,25);
-      popMatrix();
     }
   }
 }

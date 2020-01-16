@@ -11,6 +11,8 @@ void setup(){
   //basic setup
   size(1300,800);
   imageMode(CENTER);
+  textSize(32);
+  textAlign(CENTER);
   
   //floor set and collider
   floorHeight = height/3*2;
@@ -55,7 +57,7 @@ void draw(){
   floorCol.render();
   
   //hat spawning
-  hatTimer-=0.016;
+  //hatTimer-=0.016;
   if(hatTimer<=0){
     nully.x=random(width/4, width/4*3);
     nullyHatList.add(new Hat(nully, hatSprite));
@@ -63,30 +65,37 @@ void draw(){
   }
   
   //p1 movement functions
-  if(p1n&&p1.onGround)p1.yv=-8;
-  if(p1w&&p1.xv>-8){p1.xv-=1;p1.radian-=0.5;}
-  if(p1e&&p1.xv<8){p1.xv+=1;p1.radian+=0.5;}
-  if(p1s&&p1HatList.size()>0){p1.hatList.get(0).thrown=true; p1.hatList.get(0).active=true; nully.hatList.add(p1.hatList.get(0)); p1.hatList.remove(0); p1s=false;}
+  if(!p1.dead){
+    if(p1n&&p1.onGround)p1.yv=-8;
+    if(p1w&&p1.xv>-8){p1.xv-=1;p1.radian-=0.5;}
+    if(p1e&&p1.xv<8){p1.xv+=1;p1.radian+=0.5;}
+    if(p1s&&p1HatList.size()>0){p1.hatList.get(0).thrown=true; p1.hatList.get(0).active=true; p1s=false;}
+  }
   //p2 movement functions
-  if(p2n&&p2.onGround)p2.yv=-8;
-  if(p2w&&p2.xv>-8){p2.xv-=1;p2.radian+=0.5;}
-  if(p2e&&p2.xv<8){p2.xv+=1;p2.radian-=0.5;}
-  if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; nully.hatList.add(p2.hatList.get(0)); p2.hatList.remove(0); p2s=false;}
+  if(!p2.dead){
+    if(p2n&&p2.onGround)p2.yv=-8;
+    if(p2w&&p2.xv>-8){p2.xv-=1;p2.radian+=0.5;}
+    if(p2e&&p2.xv<8){p2.xv+=1;p2.radian-=0.5;}
+    if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; p2s=false;}
+  }
   
   //update functions
   p1.update();
   p1.show();
   p2.update();
   p2.show();
-  for(Hat h:p1HatList){
+  for(int i=0;i<p1HatList.size();i++){
+    Hat h = p1HatList.get(i);
     h.update();
     h.show();
   }
-  for(Hat h:p2HatList){
+  for(int i=0;i<p2HatList.size();i++){
+    Hat h = p2HatList.get(i);
     h.update();
     h.show();
   }
-  for(Hat h:nullyHatList){
+  for(int i=0;i<nullyHatList.size();i++){
+    Hat h = nullyHatList.get(i);
     h.thrown=true;
     h.update();
     h.show();
