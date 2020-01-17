@@ -31,7 +31,7 @@ public class Hat{
         y+=(yv-master.hatList.indexOf(this)*8)/(master.hatList.indexOf(this)+1)+abs(xv/20);
       }else{
         //action if thrown
-        if(master!=nully){
+        if(master!=nully){//hat collision
           for(int i=0;i<master.other.hatList.size();i++){
             Hat h = master.other.hatList.get(i);
             if(h.collider.checkCol(collider)&&h.thrown){
@@ -46,12 +46,15 @@ public class Hat{
             }
           }
         }
+        //not floor collision
         if(!collider.checkCol(floorCol)&&active){
           yv+=0.1;
           radian+=0.2;
           if(x<=0||x>=width){
             master.hatList.remove(this);
           }
+          //checking for platforms
+          checkLevel(lvl);
         }else{
           //if on ground
           active = false;
@@ -104,6 +107,54 @@ public class Hat{
         image(sprite,0,0,25,25);
         popMatrix();
       }
+    }
+  }
+  
+  void checkLevel(Level curL)
+  {
+    if(curL != null)
+    {
+      for(Platform pl:curL.platforms)
+      {
+        if(pl != null && pl.collider != null)
+          this.CollidePlatform(pl.collider);
+      }
+    }
+  }
+  
+  void CollidePlatform(BoxCol b)
+  {
+    if(collider.checkCol(b))
+    {
+      //check for platform
+      if(b.y >= this.y && abs(b.x - x) < b.xSize/2)
+      {
+        y = b.y - b.ySize/2;
+        yv=0;
+        active=false;
+        println("hit floor");
+      }
+      //check ceiling
+      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      {
+        y = b.y + b.ySize*0.9;
+        yv=0;
+        println("hit ceiling");
+      }
+      
+      //check left wall
+      if(abs(xv) > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
+      {
+        xv = 0;
+        println("hit left wall");
+      }
+      //check right wall
+      else if(abs(xv) > 0 && b.x < x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
+      {
+        xv = 0;
+        println("Hit right wall");
+      }
+      
     }
   }
 }

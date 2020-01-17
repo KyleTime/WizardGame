@@ -6,6 +6,7 @@ ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
+String filePath = "/Resources/Levels/level.txt";
 
 ///Platform Stuff
 
@@ -134,6 +135,30 @@ void keyPressed(){
   if(keyCode==LEFT)p2w=true;
   if(keyCode==DOWN)p2s=true;
   if(keyCode==RIGHT)p2e=true;
+  //level save
+  if(key=='p'){
+    File file = sketchFile(filePath);
+    if(file.exists()){
+      file.delete();
+    }else{
+      String[] platList = new String[lvl.platforms.size()];
+      for(Platform p:lvl.platforms){
+        platList[lvl.platforms.indexOf(p)] = p.gridX+" "+p.gridY;
+      }
+      saveStrings(filePath,platList);
+      println("Level saved to: "+filePath);
+    }
+  }
+  if(key=='l'){
+    String[] gridCoords = loadStrings(filePath);
+    int platListSize = gridCoords.length;
+    println(platListSize);
+    for(int i=0;i<platListSize;i++){
+      int[] xy = int(split(gridCoords[i], ' '));
+      lvl.platforms.add(new Platform(xy[0],xy[1],lvl));
+    }
+    lvl.updatePlatforms();
+  }
 }
 
 
@@ -158,5 +183,8 @@ void nextTile()
 }
 
 void mousePressed(){
-  lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
+  if(mouseButton==LEFT){
+    lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
+    lvl.updatePlatforms();
+  }
 }

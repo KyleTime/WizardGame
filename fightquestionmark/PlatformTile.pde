@@ -39,7 +39,8 @@ public class Platform{
     float[] pos = l.getGrid(gridX, gridY);
     
     image(l.tile, pos[0], pos[1]);
-    println(pos[0]+" "+pos[1]+";");
+    //print grid coords
+    //println(pos[0]+" "+pos[1]+";");
   }
 
 }
