@@ -9,7 +9,7 @@ Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,
 
 ///Platform Stuff
 
-Level[] levels = new Level[] {new Level()};
+ArrayList<Level> levels = new ArrayList();
 
 //selected level;
 Level lvl;
@@ -17,7 +17,9 @@ Level lvl;
 
 void setup(){
   
-  lvl = levels[0];
+  levels.add(new Level());
+  
+  lvl = levels.get(0);
   
   lvl.begin();
   

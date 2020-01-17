@@ -41,9 +41,12 @@ public class Level{
     }
   }
   
-  void clickPlatform()
+  void createPlatformsBlock(int x, int y, int xSize, int ySize)
   {
-    
+    for(int j = 0; int j < xSize; j++)
+    {
+      for()
+    }
   }
   
   void updatePlatforms()
