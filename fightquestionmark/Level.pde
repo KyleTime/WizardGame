@@ -43,9 +43,9 @@ public class Level{
   
   void createPlatformsBlock(int x, int y, int xSize, int ySize)
   {
-    for(int j = 0; int j < xSize; j++)
+    for(int x1 = 0; j < xSize; j++)
     {
-      for()
+      for(int y1 = 0; )
     }
   }
   

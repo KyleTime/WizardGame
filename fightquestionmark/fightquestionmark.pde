@@ -65,9 +65,6 @@ void setup(){
 
 
 void draw(){
-  
-
-  
   //bg draw
   background(0);
   stroke(200);
