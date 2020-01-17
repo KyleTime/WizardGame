@@ -119,7 +119,7 @@ void draw(){
   
     lvl.update();
     
-    
+    nextTile();
 }
 
 
@@ -146,6 +146,15 @@ void keyReleased(){
   if(keyCode==LEFT)p2w=false;
   if(keyCode==DOWN)p2s=false;
   if(keyCode==RIGHT)p2e=false;
+}
+
+void nextTile()
+{
+    float[] point = lvl.getGrid((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize));
+  
+  
+    fill(100,100);
+    rect(point[0] - 15.5, point[1] - 15.5, 31,31);
 }
 
 void mousePressed(){

@@ -34,6 +34,7 @@ public class Player{
       }else{
         xv*=0.99;
       }
+      checkLevel(lvl);
       y+=yv;
       x+=xv;
       collider.x = x;
@@ -48,6 +49,7 @@ public class Player{
       }else{
         onGround=false;
       }
+      checkLevel(lvl);
       //wall collision
       if(x<=0+12||x>=width-12){
         x-=xv;
@@ -117,6 +119,52 @@ public class Player{
       fill(255,0,0);
       text("DEAD",0,0);
       popMatrix();
+    }
+  }
+  
+  void checkLevel(Level curL)
+  {
+    if(curL != null)
+    {
+      for(Platform pl:curL.platforms)
+      {
+        if(pl != null && pl.collider != null)
+          this.CollidePlatform(pl.collider);
+      }
+    }
+  }
+  
+  void CollidePlatform(BoxCol b)
+  {
+    if(collider.checkCol(b))
+    {
+      //check for ground
+      if(b.y > this.y && abs(b.x - x) < b.xSize/2)
+      {
+        onGround = true;
+        y = b.y - b.ySize*0.9;
+        
+        if(yv > 0)
+          yv = 0;
+      }
+      //check ceiling
+      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      {
+        y = b.y + b.ySize*0.9;
+        
+        if(yv < 0)
+          yv = 0;
+      }
+      else if(xv > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + collider.ySize/2 - 10)
+      {
+        xv = 0;
+      }
+      //check left wall
+      else if(xv < 0 && b.x < x && abs(b.y - y) < b.ySize/2 + collider.ySize/2 - 10)
+      {
+        xv = 0;
+      }
+      
     }
   }
 }
