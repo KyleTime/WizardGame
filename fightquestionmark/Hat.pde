@@ -62,8 +62,12 @@ public class Hat{
           y = floorCol.y-floorCol.ySize/2;
           xv*=0.4;
         }
+
+        //MOVES HATS
         y+=yv;
         x+=xv;
+        //MOVES HATS
+        
       }
       if(master.faceRight){
         collider.x=x-10;
