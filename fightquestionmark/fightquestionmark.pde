@@ -7,7 +7,22 @@ PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 
+///Platform Stuff
+
+ArrayList<Level> levels = new ArrayList();
+
+//selected level;
+Level lvl;
+//////////////////////////
+
 void setup(){
+  
+  levels.add(new Level());
+  
+  lvl = levels.get(0);
+  
+  lvl.begin();
+  
   //basic setup
   size(1300,800);
   imageMode(CENTER);
@@ -42,6 +57,9 @@ void setup(){
   p1.other = p2;
   p2.other = p1;
   
+  p1HatList.add(new Hat(p1,hatSprite));
+  p2HatList.add(new Hat(p2,hatSprite));
+  
   hatTimer = 3;
 }
 
@@ -60,7 +78,7 @@ void draw(){
     nullyHatList.add(new Hat(nully, hatSprite));
     nullyHatList.get(nullyHatList.size()-1).thrown=true;
     nullyHatList.get(nullyHatList.size()-1).active=true;
-    hatTimer=10;
+    hatTimer=5;
   }
   
   //p1 movement functions
@@ -98,6 +116,10 @@ void draw(){
     h.update();
     h.show();
   }
+  
+    lvl.update();
+    
+    
 }
 
 
@@ -124,4 +146,8 @@ void keyReleased(){
   if(keyCode==LEFT)p2w=false;
   if(keyCode==DOWN)p2s=false;
   if(keyCode==RIGHT)p2e=false;
+}
+
+void mousePressed(){
+  lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
 }
