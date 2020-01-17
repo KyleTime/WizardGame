@@ -17,10 +17,6 @@ public class Level{
     tile = loadImage("/Resources/Tiles.png");
     
     platforms = new ArrayList<Platform>() {};
-    platforms.add(new Platform(5,15,1, this));
-    platforms.add(new Platform(5,16,1, this));
-    platforms.add(new Platform(5,17,1, this));
-    platforms.add(new Platform(6,15,1, this));
   }
   
   void update()
@@ -43,6 +39,11 @@ public class Level{
         }
       }
     }
+  }
+  
+  void clickPlatform()
+  {
+    
   }
   
   void updatePlatforms()

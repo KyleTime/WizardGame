@@ -33,6 +33,9 @@ public class Player{
       }else{
         xv*=0.99;
       }
+      
+      checkLevel(lvl);
+      
       //MOVE PLAYER
       y+=yv;
       x+=xv;
@@ -139,24 +142,25 @@ public class Player{
     if(collider.checkCol(b))
     {
       //check for ground
-      if(b.y > this.y && abs(b.x - x) < b.xSize/2 + collider.xSize/2)
+      if(b.y > this.y && abs(b.x - x) < b.xSize/2)
       {
         onGround = true;
-        yv = 0;
         y = b.y - b.ySize*0.9;
+        
+        if(yv > 0)
+          yv = 0;
       }
       //check ceiling
-      else if(b.y < this.y && abs(b.x - x) < b.xSize/2 + collider.xSize/2)
+      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
       {
-        yv = 0;
         y = b.y + b.ySize*0.9;
       }
-      else if(xv > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + collider.ySize/2)
+      else if(xv > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + collider.ySize/2 - 10)
       {
         xv = 0;
       }
       //check left wall
-      else if(xv < 0 && b.x < x && abs(b.y - y) < b.ySize/2 + collider.ySize/2)
+      else if(xv < 0 && b.x < x && abs(b.y - y) < b.ySize/2 + collider.ySize/2 - 10)
       {
         xv = 0;
       }

@@ -8,10 +8,16 @@ float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 
 ///Platform Stuff
-Level lvl = new Level();
+
+Level[] levels = new Level[] {new Level()};
+
+//selected level;
+Level lvl;
 //////////////////////////
 
 void setup(){
+  
+  lvl = levels[0];
   
   lvl.begin();
   
@@ -114,8 +120,7 @@ void draw(){
   
     lvl.update();
     
-    p1.checkLevel(lvl);
-    p2.checkLevel(lvl);
+    
 }
 
 

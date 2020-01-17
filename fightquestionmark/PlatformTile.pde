@@ -1,7 +1,4 @@
 public class Platform{
-
-  int numTiles;
-  
   int gridX;
   int gridY;
   
@@ -9,11 +6,10 @@ public class Platform{
   
   BoxCol collider;
   
-  public Platform(int gridX, int gridY, int numTiles, Level l)
+  public Platform(int gridX, int gridY, Level l)
   {
     this.gridX = gridX;
     this.gridY = gridY;
-    this.numTiles = numTiles;
     this.l = l;
     if(collider != null)
       updateCollider();
