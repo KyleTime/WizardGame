@@ -128,7 +128,7 @@ public class Player{
           dmin=d;
           p=pl;
         }
-        if(pl != null && pl.collider != null)
+        if(pl.collider != null)
           this.CollidePlatform(pl.collider);
       }
       println(dmin);
