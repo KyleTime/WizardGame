@@ -6,7 +6,7 @@ ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
-String filePath = "/Resources/Levels/level.txt";
+String filePath = "/Resources/Levels/BaseLevel.txt";
 
 ///Platform Stuff
 
@@ -32,7 +32,13 @@ void setup(){
   
   //floor set and collider
   floorHeight = height/3*2;
-  floorCol = new BoxCol(width/2, height*0.9, width, height/2);
+  
+  //base level
+  for(int x = 0;x<width/lvl.tileXSize+1;x++){
+    for(int y = (int)(floorHeight/lvl.tileYSize);y<height/lvl.tileYSize+1;y++){
+      lvl.platforms.add(new Platform(x,y,lvl));
+    }
+  }
   
   //sprites
   playerSprite = loadImage("/Resources/Player.png");
@@ -70,7 +76,6 @@ void draw(){
   background(0);
   stroke(200);
   fill(100);
-  floorCol.render();
   
   //hat spawning
   hatTimer-=0.016;
@@ -118,9 +123,9 @@ void draw(){
     h.show();
   }
   
-    lvl.update();
-    
-    nextTile();
+  lvl.update();
+  
+  nextTile();
 }
 
 
@@ -139,7 +144,7 @@ void keyPressed(){
   if(key=='p'){
     File file = sketchFile(filePath);
     if(file.exists()){
-      file.delete();
+      println("File already exists");
     }else{
       String[] platList = new String[lvl.platforms.size()];
       for(Platform p:lvl.platforms){

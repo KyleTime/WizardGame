@@ -42,13 +42,6 @@ public class Player{
       //render player colliders
       //collider.render();
       //floor collision
-      if(collider.checkCol(floorCol)){
-        yv=0;
-        y=floorCol.y-floorCol.ySize/2-12;
-        onGround=true;
-      }else{
-        onGround=false;
-      }
       checkLevel(lvl);
       //wall collision
       if(x<=0+12||x>=width-12){
