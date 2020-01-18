@@ -120,10 +120,10 @@ public class Player{
     if(curL != null)
     {
       float dmin=999;
-      Platform p = null;
+      Platform p = lvl.platforms.get(0);
       for(Platform pl:curL.platforms)
       {
-        float d=sqrt(pow(lvl.getGrid(pl.gridX,2)[0]-x,2)+pow(lvl.getGrid(pl.gridX,2)[1]-y,2));
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,2)[0]-this.x,2)+pow(lvl.getGrid(pl.gridX,2)[1]-this.y,2));
         if(dmin>d){
           dmin=d;
           p=pl;
@@ -131,8 +131,8 @@ public class Player{
         if(pl.collider != null)
           this.CollidePlatform(pl.collider);
       }
-      println(dmin);
-      if(p!=null&&!collider.checkCol(p.collider)){
+      println(lvl.platforms.indexOf(p)+" "+x);
+      if(!collider.checkCol(p.collider)){
         onGround=false;
       }
     }

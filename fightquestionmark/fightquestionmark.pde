@@ -6,7 +6,7 @@ ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
-String filePath = "/Resources/Levels/BaseLevel.txt";
+String filePath = "/Resources/Levels/level.txt";
 
 ///Platform Stuff
 
@@ -190,6 +190,6 @@ void nextTile()
 void mousePressed(){
   if(mouseButton==LEFT){
     lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
-    lvl.updatePlatforms();
+    lvl.update();
   }
 }
