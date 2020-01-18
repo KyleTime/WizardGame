@@ -119,10 +119,21 @@ public class Player{
   {
     if(curL != null)
     {
+      float dmin=999;
+      Platform p = null;
       for(Platform pl:curL.platforms)
       {
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,2)[0]-x,2)+pow(lvl.getGrid(pl.gridX,2)[1]-y,2));
+        if(dmin>d){
+          dmin=d;
+          p=pl;
+        }
         if(pl != null && pl.collider != null)
           this.CollidePlatform(pl.collider);
+      }
+      println(dmin);
+      if(p!=null&&!collider.checkCol(p.collider)){
+        onGround=false;
       }
     }
   }
@@ -141,7 +152,7 @@ public class Player{
           yv = 0;
       }
       //check ceiling
-      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      if(b.y < this.y && abs(b.x - x) < b.xSize/2)
       {
         y = b.y + b.ySize*0.9;
         
@@ -157,7 +168,6 @@ public class Player{
       {
         xv = 0;
       }
-      
     }
   }
 }

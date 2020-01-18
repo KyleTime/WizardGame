@@ -87,6 +87,7 @@ public class Hat{
   }
   
   void show(){
+    collider.render();
     if(!master.dead){
       if(!thrown){
         //action if on head
@@ -127,7 +128,7 @@ public class Hat{
     if(collider.checkCol(b))
     {
       //check for platform floor
-      if(b.y < this.y && abs(b.x - x) < b.xSize)
+      if(b.y < this.y && abs(b.x - x) < b.xSize/2)
       {
         y = b.y - b.ySize/2;
         yv=0;
@@ -139,7 +140,7 @@ public class Hat{
         println("hit floor");
       }
       //check ceiling
-      else if(b.y > this.y && abs(b.x - x) < b.xSize)
+      else if(b.y > this.y && abs(b.x - x) < b.xSize/2)
       {
         y = b.y + b.ySize;
         yv=0;

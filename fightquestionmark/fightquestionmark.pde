@@ -102,6 +102,8 @@ void draw(){
     if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; p2s=false;}
   }
   
+  lvl.update();
+  
   //update functions
   p1.update();
   p1.show();
@@ -122,8 +124,6 @@ void draw(){
     h.update();
     h.show();
   }
-  
-  lvl.update();
   
   nextTile();
 }
@@ -162,7 +162,7 @@ void keyPressed(){
       int[] xy = int(split(gridCoords[i], ' '));
       lvl.platforms.add(new Platform(xy[0],xy[1],lvl));
     }
-    lvl.updatePlatforms();
+    lvl.update();
   }
 }
 
