@@ -7,6 +7,7 @@ PImage playerSprite, hatSprite;
 float floorHeight, hatTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 String filePath = "/Resources/Levels/level.txt";
+PFont textFont;
 
 ///Platform Stuff
 
@@ -27,7 +28,8 @@ void setup(){
   //basic setup
   size(1300,800);
   imageMode(CENTER);
-  textSize(32);
+  textFont = createFont("/Resources/Fonts/slkscr.ttf",32);
+  textFont(textFont);
   textAlign(CENTER);
   
   //floor set and collider
