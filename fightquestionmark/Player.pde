@@ -131,7 +131,6 @@ public class Player{
         if(pl.collider != null)
           this.CollidePlatform(pl.collider);
       }
-      println(lvl.platforms.indexOf(p)+" "+x);
       if(!collider.checkCol(p.collider)){
         onGround=false;
       }
