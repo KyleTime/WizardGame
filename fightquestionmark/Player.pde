@@ -123,7 +123,7 @@ public class Player{
       Platform p = lvl.platforms.get(0);
       for(Platform pl:curL.platforms)
       {
-        float d=sqrt(pow(lvl.getGrid(pl.gridX,2)[0]-this.x,2)+pow(lvl.getGrid(pl.gridX,2)[1]-this.y,2));
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,pl.gridY)[0]-this.x,2)+pow(lvl.getGrid(pl.gridX,pl.gridY)[1]-this.y,2));
         if(dmin>d){
           dmin=d;
           p=pl;
