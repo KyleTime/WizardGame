@@ -42,13 +42,6 @@ public class Player{
       //render player colliders
       //collider.render();
       //floor collision
-      if(collider.checkCol(floorCol)){
-        yv=0;
-        y=floorCol.y-floorCol.ySize/2-12;
-        onGround=true;
-      }else{
-        onGround=false;
-      }
       checkLevel(lvl);
       //wall collision
       if(x<=0+12||x>=width-12){
@@ -126,10 +119,21 @@ public class Player{
   {
     if(curL != null)
     {
+      float dmin=999;
+      Platform p = lvl.platforms.get(0);
       for(Platform pl:curL.platforms)
       {
-        if(pl != null && pl.collider != null)
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,pl.gridY)[0]-this.x,2)+pow(lvl.getGrid(pl.gridX,pl.gridY)[1]-this.y,2));
+        if(dmin>d){
+          dmin=d;
+          p=pl;
+        }
+        if(pl.collider != null)
           this.CollidePlatform(pl.collider);
+      }
+      println(lvl.platforms.indexOf(p)+" "+x);
+      if(!collider.checkCol(p.collider)){
+        onGround=false;
       }
     }
   }
@@ -148,7 +152,7 @@ public class Player{
           yv = 0;
       }
       //check ceiling
-      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      if(b.y < this.y && abs(b.x - x) < b.xSize/2)
       {
         y = b.y + b.ySize*0.9;
         
@@ -164,7 +168,6 @@ public class Player{
       {
         xv = 0;
       }
-      
     }
   }
 }

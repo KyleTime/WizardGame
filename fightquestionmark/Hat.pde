@@ -47,7 +47,7 @@ public class Hat{
           }
         }
         //not floor collision
-        if(!collider.checkCol(floorCol)&&active){
+        if(active){
           yv+=0.1;
           radian+=0.2;
           if(x<=0||x>=width){
@@ -61,8 +61,8 @@ public class Hat{
           master.hatList.remove(this);
           master=nully;
           nullyHatList.add(this);
+          y-=yv;
           yv = 0;
-          y = floorCol.y-floorCol.ySize/2;
           xv*=0.4;
         }
         y+=yv;
@@ -87,6 +87,7 @@ public class Hat{
   }
   
   void show(){
+    collider.render();
     if(!master.dead){
       if(!thrown){
         //action if on head
@@ -126,24 +127,27 @@ public class Hat{
   {
     if(collider.checkCol(b))
     {
-      //check for platform
-      if(b.y >= this.y && abs(b.x - x) < b.xSize/2)
+      //check for platform floor
+      if(b.y < this.y && abs(b.x - x) < b.xSize/2)
       {
         y = b.y - b.ySize/2;
         yv=0;
+        radian-=0.2;
         active=false;
+        master.hatList.remove(this);
+        master=nully;
+        nullyHatList.add(this);
         println("hit floor");
       }
       //check ceiling
-      else if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      else if(b.y > this.y && abs(b.x - x) < b.xSize/2)
       {
-        y = b.y + b.ySize*0.9;
+        y = b.y + b.ySize;
         yv=0;
         println("hit ceiling");
       }
-      
       //check left wall
-      if(abs(xv) > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
+      else if(abs(xv) > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
       {
         xv = 0;
         println("hit left wall");

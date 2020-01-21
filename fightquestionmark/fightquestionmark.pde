@@ -32,7 +32,13 @@ void setup(){
   
   //floor set and collider
   floorHeight = height/3*2;
-  floorCol = new BoxCol(width/2, height*0.9, width, height/2);
+  
+  //base level
+  for(int x = 0;x<width/lvl.tileXSize+1;x++){
+    for(int y = (int)(floorHeight/lvl.tileYSize);y<height/lvl.tileYSize+1;y++){
+      lvl.platforms.add(new Platform(x,y,lvl));
+    }
+  }
   
   //sprites
   playerSprite = loadImage("/Resources/Player.png");
@@ -70,7 +76,6 @@ void draw(){
   background(0);
   stroke(200);
   fill(100);
-  floorCol.render();
   
   //hat spawning
   hatTimer-=0.016;
@@ -97,6 +102,8 @@ void draw(){
     if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; p2s=false;}
   }
   
+  lvl.update();
+  
   //update functions
   p1.update();
   p1.show();
@@ -118,9 +125,7 @@ void draw(){
     h.show();
   }
   
-    lvl.update();
-    
-    nextTile();
+  nextTile();
 }
 
 
@@ -139,7 +144,7 @@ void keyPressed(){
   if(key=='p'){
     File file = sketchFile(filePath);
     if(file.exists()){
-      file.delete();
+      println("File already exists");
     }else{
       String[] platList = new String[lvl.platforms.size()];
       for(Platform p:lvl.platforms){
@@ -157,7 +162,7 @@ void keyPressed(){
       int[] xy = int(split(gridCoords[i], ' '));
       lvl.platforms.add(new Platform(xy[0],xy[1],lvl));
     }
-    lvl.updatePlatforms();
+    lvl.update();
   }
 }
 
@@ -185,6 +190,6 @@ void nextTile()
 void mousePressed(){
   if(mouseButton==LEFT){
     lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
-    lvl.updatePlatforms();
+    lvl.update();
   }
 }
