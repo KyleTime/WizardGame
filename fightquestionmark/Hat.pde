@@ -127,36 +127,35 @@ public class Hat{
   {
     if(collider.checkCol(b))
     {
-      //check for platform floor
-      if(b.y < this.y && abs(b.x - x) < b.xSize/2)
+      if(y < b.y)
       {
-        y = b.y - b.ySize/2;
-        yv=0;
-        radian-=0.2;
-        active=false;
+        active = false;
+        
         master.hatList.remove(this);
         master=nully;
         nullyHatList.add(this);
-        println("hit floor");
+        
+        y = b.y - b.xSize/2 - collider.rad/3;
+        
+        yv = -10;
+        
+        if(yv > 0)
+          yv = 0;
       }
-      //check ceiling
-      else if(b.y > this.y && abs(b.x - x) < b.xSize/2)
+      else if(y > b.y)
       {
-        y = b.y + b.ySize;
-        yv=0;
-        println("hit ceiling");
+         yv = 10;
+        
+        if(yv < 0)
+          yv = 0;
       }
-      //check left wall
-      else if(abs(xv) > 0 && b.x > x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
+      else if(x > b.x)
       {
-        xv = 0;
-        println("hit left wall");
+        xv = 10;
       }
-      //check right wall
-      else if(abs(xv) > 0 && b.x < x && abs(b.y - y) < b.ySize/2 + lvl.tileYSize/2 - 10)
+      else if(x < b.x)
       {
-        xv = 0;
-        println("Hit right wall");
+        xv = -10;
       }
       
     }
