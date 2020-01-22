@@ -4,7 +4,7 @@ ArrayList<Hat> p1HatList = new ArrayList();
 ArrayList<Hat> p2HatList = new ArrayList();
 ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
-float floorHeight, hatTimer;
+float floorHeight, hatTimer, resTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
 String filePath = "/Resources/Levels/level.txt";
 PFont textFont;
@@ -66,10 +66,8 @@ void setup(){
   p1.other = p2;
   p2.other = p1;
   
-  p1HatList.add(new Hat(p1,hatSprite));
-  p2HatList.add(new Hat(p2,hatSprite));
-  
   hatTimer = 3;
+  resTimer = 5;
 }
 
 
@@ -78,6 +76,9 @@ void draw(){
   background(0);
   stroke(200);
   fill(100);
+  
+  //making text size normal
+  textSize(32);
   
   //hat spawning
   hatTimer-=0.016;
@@ -128,6 +129,30 @@ void draw(){
   }
   
   nextTile();
+  
+  fill(255);
+  textSize(50);
+  if(p1.score>=5||p2.score>=5){
+    textSize(100);
+    if(p1.score>=5){
+      text("P1 WINS",width/2,height/2);
+    }else{
+      text("P2 WINS",width/2,height/2);
+    }
+    resTimer-=0.016;
+    if(resTimer<=0){
+      p1.score=0;
+      p2.score=0;
+      resTimer=5;
+      p1HatList.clear();
+      p2HatList.clear();
+      nullyHatList.clear();
+      p1.spawn();
+      p2.spawn();
+    }
+  }else{
+    text(p1.score+" : "+p2.score,width/2,height/6);
+  }
 }
 
 

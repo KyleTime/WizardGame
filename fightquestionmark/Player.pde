@@ -5,6 +5,7 @@ public class Player{
   PImage sprite;
   Player other;
   ArrayList<Hat> hatList;
+  int score;
   
   public Player(Boolean isRight, float spawnx, float spawny, PImage sprite, ArrayList<Hat> h){
     this.faceRight = isRight;
@@ -17,11 +18,14 @@ public class Player{
     this.radian = 0;
     this.hatList = h;
     this.dead = false;
+    score=0;
   }
   
   void spawn(){
     x = spawnx;
     y = spawny;
+    xv=0;
+    yv=0;
     dead = false;
     this.hatList.add(new Hat(this,hatSprite));
   }
@@ -76,6 +80,8 @@ public class Player{
         Hat h = other.hatList.get(i);
         if(collider.checkCol(h.collider)&&h.active){
           dead=true;
+          if(resTimer>0)
+            other.score++;
           deadTimer=3;
         }
       }

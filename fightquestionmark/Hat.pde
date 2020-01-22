@@ -87,7 +87,7 @@ public class Hat{
   }
   
   void show(){
-    collider.render();
+    //collider.render();
     if(!master.dead){
       if(!thrown){
         //action if on head
