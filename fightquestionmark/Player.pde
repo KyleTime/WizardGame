@@ -23,7 +23,7 @@ public class Player{
     x = spawnx;
     y = spawny;
     dead = false;
-    this.hatList.add(new Hat(this,hatSprite));
+    this.hatList.add(new Hat(this,hatSprite.get(0)));
   }
   
   void update(){
