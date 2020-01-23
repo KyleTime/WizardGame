@@ -65,8 +65,12 @@ public class Hat{
           yv = 0;
           xv*=0.4;
         }
-        y+=yv;
-        x+=xv;
+        
+        //MOVEMENT
+        x += xv;
+        y += yv;
+        
+        checkPath();
       }
       if(master.faceRight){
         collider.x=x-10;
@@ -85,7 +89,7 @@ public class Hat{
       xv=random(-5,6);
     }
   }
-  
+
   void show(){
     collider.render();
     if(!master.dead){
@@ -110,6 +114,39 @@ public class Hat{
       }
     }
   }
+    
+  void checkPath()
+  {
+    Vector next = new Vector(x + xv, y + yv);
+    
+    CirCol c = new CirCol(next.x,next.y,20);
+    
+    while(checkClose(c,lvl))
+    {
+      
+    }
+  }
+  
+  boolean checkClose(CirCol c,Level curL)
+  {
+    if(curL != null)
+    {
+      float dmin=999;
+      Platform p = lvl.platforms.get(0);
+      for(Platform pl:curL.platforms)
+      {
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,pl.gridY)[0]-c.x,2)+pow(lvl.getGrid(pl.gridX,pl.gridY)[1]-c.y,2));
+        if(dmin>d){
+          dmin=d;
+          p=pl;
+        }
+      }
+      return c.checkCol(p.collider);
+      
+    }
+    else
+      return false;
+  }
   
   void checkLevel(Level curL)
   {
@@ -122,6 +159,7 @@ public class Hat{
       }
     }
   }
+
   
   void CollidePlatform(BoxCol b)
   {
@@ -135,29 +173,38 @@ public class Hat{
         master=nully;
         nullyHatList.add(this);
         
-        y = b.y - b.xSize/2 - collider.rad/3;
+        y = b.y - b.xSize/2;
         
-        yv = -10;
+        yv = 0;
         
         if(yv > 0)
           yv = 0;
+          
+
       }
       else if(y > b.y)
       {
-         yv = 10;
+         yv = 2;
         
         if(yv < 0)
           yv = 0;
       }
-      else if(x > b.x)
+      
+      if(x > b.x - b.xSize/2)
       {
-        xv = 10;
+        xv = 0;
       }
-      else if(x < b.x)
+      else if(x < b.x + b.xSize/2)
       {
-        xv = -10;
+        xv = 0;
       }
       
+      
     }
+  }
+  
+  float dis(float x1, float y1, float x2, float y2)
+  {
+    return sqrt( pow(x1 - x2,2) + pow(y1 - y2,2));
   }
 }
