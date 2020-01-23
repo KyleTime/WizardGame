@@ -5,7 +5,7 @@ ArrayList<Hat> p2HatList = new ArrayList();
 ArrayList<Hat> nullyHatList = new ArrayList();
 PImage playerSprite, hatSprite;
 float floorHeight, hatTimer, resTimer;
-Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false;
+Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false,pBlock=false,bBlock=false,showPlace=false;
 String filePath = "/Resources/Levels/level.txt";
 PFont textFont;
 
@@ -104,6 +104,33 @@ void draw(){
     if(p2e&&p2.xv<8){p2.xv+=1;p2.radian-=0.5;}
     if(p2s&&p2HatList.size()>0){p2.hatList.get(0).thrown=true; p2.hatList.get(0).active=true; p2s=false;}
   }
+  //block placement
+  if(pBlock&&showPlace){
+    int x = (int)(mouseX/lvl.tileXSize);
+    int y = (int)(mouseY/lvl.tileYSize);
+    Boolean place = true;
+    for(Platform p:lvl.platforms){
+      if(x==p.gridX&&y==p.gridY){
+        place=false;
+        break;
+      }
+    }
+    if(place){
+      lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
+    }
+    lvl.update();
+  }
+  //block removal
+  if(bBlock&&showPlace){
+    int x = (int)(mouseX/lvl.tileXSize);
+    int y = (int)(mouseY/lvl.tileYSize);
+    for(int i=0;i<lvl.platforms.size();i++){
+      Platform p = lvl.platforms.get(i);
+      if(x==p.gridX&&y==p.gridY){
+        lvl.platforms.remove(p);
+      }
+    }
+  }
   
   lvl.update();
   
@@ -128,7 +155,7 @@ void draw(){
     h.show();
   }
   
-  nextTile();
+  if(showPlace)nextTile();
   
   fill(255);
   textSize(50);
@@ -157,6 +184,7 @@ void draw(){
 
 
 void keyPressed(){
+  if(key=='m')if(showPlace)showPlace=false;else showPlace=true;
   //p1 controls
   if(key=='w')p1n=true;
   if(key=='a')p1w=true;
@@ -185,6 +213,7 @@ void keyPressed(){
     String[] gridCoords = loadStrings(filePath);
     int platListSize = gridCoords.length;
     println(platListSize);
+    lvl.platforms.clear();
     for(int i=0;i<platListSize;i++){
       int[] xy = int(split(gridCoords[i], ' '));
       lvl.platforms.add(new Platform(xy[0],xy[1],lvl));
@@ -216,7 +245,16 @@ void nextTile()
 
 void mousePressed(){
   if(mouseButton==LEFT){
-    lvl.platforms.add(new Platform((int)(mouseX/lvl.tileXSize),(int)(mouseY/lvl.tileYSize),lvl));
-    lvl.update();
+    pBlock=true;
+  }else if(mouseButton==RIGHT){
+    bBlock=true;
+  }
+}
+
+void mouseReleased(){
+  if(mouseButton==LEFT){
+    pBlock=false;
+  }else if(mouseButton==RIGHT){
+    bBlock=false;
   }
 }
