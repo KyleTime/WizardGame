@@ -87,7 +87,7 @@ void draw(){
     nullyHatList.add(new Hat(nully, hatSprite));
     nullyHatList.get(nullyHatList.size()-1).thrown=true;
     nullyHatList.get(nullyHatList.size()-1).active=true;
-    hatTimer=5;
+    hatTimer=10;
   }
   
   //p1 movement functions
@@ -190,11 +190,13 @@ void keyPressed(){
   if(key=='a')p1w=true;
   if(key=='s')p1s=true;
   if(key=='d')p1e=true;
+  if(key=='r'){p1.hatList.clear();p1.dead=true;}
   //p2 controls
   if(keyCode==UP)p2n=true;
   if(keyCode==LEFT)p2w=true;
   if(keyCode==DOWN)p2s=true;
   if(keyCode==RIGHT)p2e=true;
+  if(key=='0'){p2.hatList.clear();p2.dead=true;}
   //level save
   if(key=='p'){
     File file = sketchFile(filePath);
