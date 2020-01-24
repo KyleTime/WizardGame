@@ -66,11 +66,11 @@ public class Hat{
           xv*=0.4;
         }
         
+        checkPath();
+        
         //MOVEMENT
         x += xv;
         y += yv;
-        
-        checkPath();
       }
       if(master.faceRight){
         collider.x=x-10;
@@ -119,12 +119,47 @@ public class Hat{
   {
     Vector next = new Vector(x + xv, y + yv);
     
-    CirCol c = new CirCol(next.x,next.y,20);
+    CirCol c = new CirCol(x,y,20);
     
-    while(checkClose(c,lvl))
+    float xDis;
+    float yDis;
+    
+    Vector slope = new Vector(next.x - x, next.y - y);
+    
+    float C = sqrt(pow(xv,2) + pow(yv,2));
+    
+    float div = 10;
+    
+    for(int j = 0; j < div; j++)
     {
+      if(checkClose(c, lvl))
+      {
+        break;
+      }
       
+      c.x += slope.x*(1/div);
+      c.y += slope.y*(1/div);
     }
+    
+    xDis = c.x - x;
+    yDis = c.y - y;
+    
+    //if under this value, do things
+    float min = 0.1;
+    
+    if(xDis < min && yDis < min)
+    {
+      checkLevel(lvl);
+      xv = xDis;
+      yv = yDis;
+
+    }
+    {    
+      xv = xDis;
+      yv = yDis;
+      checkLevel(lvl);
+    }
+
   }
   
   boolean checkClose(CirCol c,Level curL)
@@ -165,13 +200,10 @@ public class Hat{
   {
     if(collider.checkCol(b))
     {
+      
       if(y < b.y)
-      {
-        active = false;
-        
-        master.hatList.remove(this);
-        master=nully;
-        nullyHatList.add(this);
+      { 
+        Ground();
         
         y = b.y - b.xSize/2;
         
@@ -179,8 +211,6 @@ public class Hat{
         
         if(yv > 0)
           yv = 0;
-          
-
       }
       else if(y > b.y)
       {
@@ -189,18 +219,31 @@ public class Hat{
         if(yv < 0)
           yv = 0;
       }
+      else if(x < b.x)
+      {
+        xv = 0;
+        x += 10;
+        println("hit right side");
+      }
+      else if(x > b.x)
+      {
+        xv = 0;
+        x -= 10;
+        println("hit left side");
+      }
       
-      if(x > b.x - b.xSize/2)
-      {
-        xv = 0;
-      }
-      else if(x < b.x + b.xSize/2)
-      {
-        xv = 0;
-      }
       
       
     }
+  }
+  
+  void Ground()
+  {
+    active = false;
+    
+    master.hatList.remove(this);
+    master=nully;
+    nullyHatList.add(this);
   }
   
   float dis(float x1, float y1, float x2, float y2)
