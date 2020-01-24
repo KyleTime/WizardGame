@@ -13,12 +13,31 @@ public class CirCol{
 
   boolean checkCol(CirCol c)
   {
-     if(dis(x,y,c.x,c.y) <= rad/2 + c.rad/2)
+     if(dis(x,y,c.x,c.y) <= rad + c.rad)
      {
          return true;
      }
      else
        return false;
+  }
+  
+  Vector theLine(BoxCol b)
+  {
+    float[] least = new float[2];
+    
+    float slopeX = x - b.x;
+    float slopeY = y - b.y;
+   
+    
+    float slope = slopeY/slopeX;
+    
+    
+    float unit = atan(slope);
+    
+    least[0] = x - cos(unit)*rad;
+    least[1] = y - sin(unit)*rad;
+    
+    return new Vector(least[0], least[1]);
   }
   
   boolean checkCol(BoxCol b)
@@ -34,8 +53,8 @@ public class CirCol{
     
     float unit = atan(slope);
     
-    least[0] = x - cos(unit)*rad/2;
-    least[1] = y - sin(unit)*rad/2;
+    least[0] = x - cos(unit)*rad;
+    least[1] = y - sin(unit)*rad;
     
     //render line code
     /*

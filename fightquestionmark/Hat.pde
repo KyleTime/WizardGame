@@ -65,8 +65,12 @@ public class Hat{
           yv = 0;
           xv*=0.4;
         }
-        y+=yv;
-        x+=xv;
+        
+        checkPath();
+        
+        //MOVEMENT
+        x += xv;
+        y += yv;
       }
       if(master.faceRight){
         collider.x=x-10;
@@ -85,7 +89,7 @@ public class Hat{
       xv=random(-5,6);
     }
   }
-  
+
   void show(){
     //collider.render();
     if(!master.dead){
@@ -110,6 +114,89 @@ public class Hat{
       }
     }
   }
+    
+  void checkPath()
+  {
+    Vector next = new Vector(x + xv, y + yv);
+    
+    CirCol c = new CirCol(x,y,20);
+    
+    float xDis;
+    float yDis;
+    
+    Vector slope = new Vector(next.x - x, next.y - y);
+    
+    float div = 100;
+    
+    for(int j = 0; j < div; j++)
+    {
+      if(checkClose(c, lvl))
+      {
+        break;
+      }
+      
+      c.x += slope.x*(1/div);
+      c.y += slope.y*(1/div);
+    }
+    
+    xDis = c.x - x;
+    yDis = c.y - y;
+    
+    //if under this value, do things
+    float min = 0.1;
+    
+    if(yDis < min)
+    {
+      if(active && checkClose(collider,lvl))
+      {
+        Ground();
+      }
+      else if(active && !checkClose(collider,lvl))
+      {
+        y += 1;
+      }
+
+    }
+    
+    if(xDis < min)
+    {
+      if(active)
+      {
+        x += -xv*5;
+        xv = -xv*2;
+        
+        yv = yDis;
+        
+      }
+    }
+    
+    xv = xDis;
+    yv = yDis;
+    checkLevel(lvl);
+    
+
+  }
+  
+  boolean checkClose(CirCol c,Level curL)
+  {
+    if(curL != null)
+    {
+      float dmin=999;
+      Platform p = lvl.platforms.get(0);
+      for(Platform pl:curL.platforms)
+      {
+        float d=sqrt(pow(lvl.getGrid(pl.gridX,pl.gridY)[0]-c.x,2)+pow(lvl.getGrid(pl.gridX,pl.gridY)[1]-c.y,2));
+        if(dmin>d){
+          dmin=d;
+          p=pl;
+        }
+      }
+      return c.checkCol(p.collider);
+      
+    }
+    else
+      return false;
+  }
   
   void checkLevel(Level curL)
   {
@@ -122,42 +209,48 @@ public class Hat{
       }
     }
   }
+
   
   void CollidePlatform(BoxCol b)
   {
     if(collider.checkCol(b))
     {
+      
       if(y < b.y)
-      {
-        active = false;
+      { 
+        Ground();
         
-        master.hatList.remove(this);
-        master=nully;
-        nullyHatList.add(this);
+        y = b.y - b.xSize/2;
         
-        y = b.y - b.xSize/2 - collider.rad/3;
-        
-        yv = -10;
+        yv = 0;
         
         if(yv > 0)
           yv = 0;
       }
       else if(y > b.y)
       {
-         yv = 10;
+         yv = 2;
         
         if(yv < 0)
           yv = 0;
       }
-      else if(x > b.x)
-      {
-        xv = 10;
-      }
-      else if(x < b.x)
-      {
-        xv = -10;
-      }
+      
+      
       
     }
+  }
+  
+  void Ground()
+  {
+    active = false;
+    
+    master.hatList.remove(this);
+    master=nully;
+    nullyHatList.add(this);
+  }
+  
+  float dis(float x1, float y1, float x2, float y2)
+  {
+    return sqrt( pow(x1 - x2,2) + pow(y1 - y2,2));
   }
 }

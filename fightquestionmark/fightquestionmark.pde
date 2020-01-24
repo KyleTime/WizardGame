@@ -3,7 +3,8 @@ BoxCol p1Col, p2Col, nullyCol, floorCol;
 ArrayList<Hat> p1HatList = new ArrayList();
 ArrayList<Hat> p2HatList = new ArrayList();
 ArrayList<Hat> nullyHatList = new ArrayList();
-PImage playerSprite, hatSprite;
+PImage playerSprite;
+ArrayList<PImage> hatSprite;
 float floorHeight, hatTimer, resTimer;
 Boolean p1n = false,p1s = false,p1w = false,p1e = false,p2n = false,p2s = false,p2w = false,p2e = false,pBlock=false,bBlock=false,showPlace=false;
 String filePath = "/Resources/Levels/level.txt";
@@ -44,7 +45,8 @@ void setup(){
   
   //sprites
   playerSprite = loadImage("/Resources/Player.png");
-  hatSprite = loadImage("/Resources/hat.png");
+
+  loadHats();
   
   //nully definition
   nully = new Player(true,width/2,0,playerSprite,nullyHatList);
@@ -66,12 +68,30 @@ void setup(){
   p1.other = p2;
   p2.other = p1;
   
+  p1HatList.add(new Hat(p1,hatSprite.get(0)));
+  p2HatList.add(new Hat(p2,hatSprite.get(0)));
+  
   hatTimer = 3;
   resTimer = 5;
 }
 
+void loadHats()
+{
+  hatSprite = new ArrayList<PImage>();
+  for(int x = 0; x < 100; x++)
+  {
+    PImage cur = loadImage("/Resources/hat" + x + ".png");
+    
+    if(cur != null)
+    {
+      hatSprite.add(cur);
+    }
+  }
+}
+
 
 void draw(){
+  
   //bg draw
   background(0);
   stroke(200);
@@ -84,7 +104,8 @@ void draw(){
   hatTimer-=0.016;
   if(hatTimer<=0){
     nully.x=random(width/4, width/4*3);
-    nullyHatList.add(new Hat(nully, hatSprite));
+    //SPAWN HATS
+    nullyHatList.add(new Hat(nully, hatSprite.get((int)random(0,hatSprite.size()))));
     nullyHatList.get(nullyHatList.size()-1).thrown=true;
     nullyHatList.get(nullyHatList.size()-1).active=true;
     hatTimer=10;

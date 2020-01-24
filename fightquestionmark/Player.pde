@@ -27,7 +27,7 @@ public class Player{
     xv=0;
     yv=0;
     dead = false;
-    this.hatList.add(new Hat(this,hatSprite));
+    this.hatList.add(new Hat(this,hatSprite.get(0)));
   }
   
   void update(){
