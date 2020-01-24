@@ -23,7 +23,7 @@ public class Player{
     x = spawnx;
     y = spawny;
     dead = false;
-    this.hatList.add(new Hat(this,hatSprite));
+    this.hatList.add(new Hat(this,hatSprite.get(0)));
   }
   
   void update(){
@@ -131,7 +131,6 @@ public class Player{
         if(pl.collider != null)
           this.CollidePlatform(pl.collider);
       }
-      println(lvl.platforms.indexOf(p)+" "+x);
       if(!collider.checkCol(p.collider)){
         onGround=false;
       }
